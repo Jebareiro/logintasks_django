@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 500px; border-radius: 15px;">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4 font-weight-bold" style="color: #333; font-size: 1.8rem;">Detalles de la Cuenta</h3>
+
+        <!-- Información del usuario -->
+        <div class="mb-4" style="background-color: #f8f9fa; padding: 15px; border-radius: 8px;">
+          <p class="mb-2" style="font-size: 1.1rem; color: #555;"><strong>Nombre de usuario:</strong> <span style="color: #000;">{{ user.username }}</span></p>
+          <p class="mb-2" style="font-size: 1.1rem; color: #555;"><strong>Correo electrónico:</strong> <span style="color: #000;">{{ user.email }}</span></p>
+          <p class="mb-2" style="font-size: 1.1rem; color: #555;"><strong>Fecha de registro:</strong> <span style="color: #000;">{{ user.date_joined|date:"d M Y" }}</span></p>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="d-grid gap-2 mt-4">
+          <a href="{% url 'account_edit' %}" class="btn btn-outline-dark mb-2">Editar Perfil</a>
+          <a href="{% url 'password_change' %}" class="btn btn-outline-dark mb-2">Cambiar Contraseña</a>
+          <a href="{% url 'account_delete' %}" class="btn btn-outline-danger mb-2">Eliminar Cuenta</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

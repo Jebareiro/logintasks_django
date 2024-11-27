@@ -1,4 +1,4 @@
-"""djangocrud URL Configuration
+"""gestortareas URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -29,4 +29,8 @@ urlpatterns = [
     path('tasks/<int:task_id>', views.task_detail, name='task_detail'),
     path('taks/<int:task_id>/complete', views.complete_task, name='complete_task'),
     path('tasks/<int:task_id>/delete', views.delete_task, name='delete_task'),
+    path('account/details/', views.account_details, name='account_details'),
+    path('account/edit/', views.account_edit, name='account_edit'),
+    path('account/change-password/', views.password_change, name='password_change'),
+    path('account/delete/', views.account_delete, name='account_delete'),
 ]

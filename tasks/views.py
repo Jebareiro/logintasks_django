@@ -6,6 +6,9 @@ from django.db import IntegrityError
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .models import Task
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import UserChangeForm
 
 from .forms import TaskForm
 
@@ -107,3 +110,39 @@ def delete_task(request, task_id):
     if request.method == 'POST':
         task.delete()
         return redirect('tasks')
+
+@login_required
+def account_details(request):
+    return render(request, 'account/account_details.html', {'user': request.user})
+
+@login_required
+def account_edit(request):
+    if request.method == 'POST':
+        form = UserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('account_details')  # Redirige a los detalles de la cuenta
+    else:
+        form = UserChangeForm(instance=request.user)
+
+    return render(request, 'account/account_edit.html', {'form': form})
+
+@login_required
+def password_change(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)  # Mantiene la sesión activa
+            return redirect('account_details')  # Redirige a los detalles de la cuenta
+    else:
+        form = PasswordChangeForm(user=request.user)
+
+    return render(request, 'account/password_change.html', {'form': form})
+
+@login_required
+def account_delete(request):
+    if request.method == 'POST':
+        request.user.delete()  # Elimina la cuenta del usuario
+        return redirect('home')  # Redirige a la página de inicio después de eliminar la cuenta
+    return render(request, 'account/account_delete.html')  # Muestra una confirmación

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand" href="/">Navbar</a>
+    <a class="navbar-brand" href="/">LoginTask</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -8,37 +8,53 @@
       data-bs-target="#navbarNav"
       aria-controls="navbarNav"
       aria-expanded="false"
-      aria-label="Toggle navigation"
+      aria-label="Alternar navegación"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a href="/" class="nav-link">Home</a>
+          <a href="/" class="nav-link">Inicio</a>
         </li>
+
         {% if user.is_authenticated %}
-        <li class="nav-item">
-          <a href="{% url 'tasks_completed' %}" class="nav-link"
-            >complted tasks</a
-          >
-        </li>
-        <li class="nav-item">
-          <a href="{% url 'tasks' %}" class="nav-link">Tasks</a>
-        </li>
-        <li class="nav-item">
-          <a href="{% url 'create_task' %}" class="nav-link">Create Task</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/logout">Logout</a>
-        </li>
+          <!-- Menú desplegable para Tareas -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="tasksDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Tareas
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="tasksDropdown">
+              <li><a class="dropdown-item" href="{% url 'tasks' %}">Ver Tareas</a></li>
+              <li><a class="dropdown-item" href="{% url 'create_task' %}">Crear Tarea</a></li>
+              <li><a class="dropdown-item" href="{% url 'tasks_completed' %}">Tareas Completadas</a></li>
+            </ul>
+          </li>
+
+          <!-- Menú desplegable para Cuenta -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Cuenta
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'account_details' %}">Detalles de Cuenta</a></li>
+              <li><a class="dropdown-item" href="{% url 'account_edit' %}">Editar Perfil</a></li>
+              <li><a class="dropdown-item" href="{% url 'password_change' %}">Cambiar Contraseña</a></li>
+              <li><a class="dropdown-item" href="{% url 'account_delete' %}">Eliminar Cuenta</a></li>
+            </ul>
+          </li>
+
+          <!-- Cerrar sesión -->
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Cerrar Sesión</a>
+          </li>
         {% else %}
-        <li class="nav-item">
-          <a href="/signin" class="nav-link">Login</a>
-        </li>
-        <li class="nav-item">
-          <a href="/signup" class="nav-link">Register</a>
-        </li>
+          <li class="nav-item">
+            <a href="/signin" class="nav-link">Iniciar Sesión</a>
+          </li>
+          <li class="nav-item">
+            <a href="/signup" class="nav-link">Registrarse</a>
+          </li>
         {% endif %}
       </ul>
     </div>

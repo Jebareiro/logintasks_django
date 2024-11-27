@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 600px; border-radius: 15px; background-color: #f9f9f9;">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4" style="font-size: 2rem; font-weight: bold; color: #333;">¿Por qué te vas? 😢</h3>
+        
+        <p class="text-center" style="font-size: 1.2rem; color: #666;">Lamentamos verte ir. Si tienes alguna sugerencia o algo que podamos mejorar, nos encantaría saberlo. ¡Siempre buscamos mejorar! </p>
+        
+        <form method="POST">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label for="id_feedback" class="form-label">¿Cómo podemos mejorar?</label>
+            <textarea class="form-control" id="id_feedback" name="feedback" rows="3" placeholder="Deja tus comentarios aquí si quieres..."></textarea>
+          </div>
+
+          <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
+            <a href="{% url 'account_details' %}" class="btn btn-outline-secondary">Volver a la Cuenta</a>
+          </div>
+        </form>
+
+        <p class="mt-3 text-center" style="font-size: 1rem; color: #888;">
+          Si eliminas tu cuenta, toda la información será eliminada permanentemente. ¡No hay vuelta atrás!
+        </p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

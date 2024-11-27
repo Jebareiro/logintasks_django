@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 500px; border-radius: 15px;">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4 font-weight-bold" style="color: #333; font-size: 1.8rem;">Editar Perfil</h3>
+
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="id_username" class="form-label">Nombre de Usuario</label>
+            <input type="text" class="form-control" id="id_username" name="username" value="{{ form.username.value }}" required>
+            {% if form.username.errors %}
+              <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                  <p>{{ error }}</p>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label for="id_email" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="id_email" name="email" value="{{ form.email.value }}" required>
+            {% if form.email.errors %}
+              <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                  <p>{{ error }}</p>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Opcional: Campo para cambiar la contraseña -->
+          <div class="mb-3">
+            <label for="id_password" class="form-label">Nueva Contraseña</label>
+            <input type="password" class="form-control" id="id_password" name="password" placeholder="Dejar en blanco si no deseas cambiarla">
+            {% if form.password.errors %}
+              <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                  <p>{{ error }}</p>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-dark">Guardar Cambios</button>
+            <a href="{% url 'account_details' %}" class="btn btn-outline-secondary">Cancelar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

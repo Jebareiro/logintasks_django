@@ -2,13 +2,32 @@
 
 {% block content %}
 
-<h1>CReate task</h1>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white text-center">
+          <h2>Crear Nueva Tarea</h2>
+        </div>
+        <div class="card-body">
+          {% if error %}
+          <div class="alert alert-danger" role="alert">
+            {{ error }}
+          </div>
+          {% endif %}
+          <form action="/create_task/" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-success btn-block">
+                Guardar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-{{error}}
-<form action="/create_task/" method="POST">
-  {% csrf_token %}
-  {{form}}
-
-  <button>Save</button>
-</form>
 {% endblock %}

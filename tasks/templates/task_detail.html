@@ -2,31 +2,53 @@
 
 {% block content %}
 
-{{task.title}}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white text-center">
+          <h2>{{ task.title }}</h2>
+        </div>
+        <div class="card-body">
+          {% if error %}
+          <div class="alert alert-danger" role="alert">
+            {{ error }}
+          </div>
+          {% endif %}
+          <p class="card-text">{{ task.description }}</p>
+          <p class="text-muted">
+            {% if task.datecompleted %}
+            Completada: {{ task.datecompleted|date:'d M Y, H:i' }}
+            {% else %}
+            Estado: Pendiente
+            {% endif %}
+          </p>
 
-{{error}}
+          <div class="d-grid gap-2">
+            {% if task.datecompleted %}
+            <button class="btn btn-success btn-block" disabled>¡Bien hecho! ✅</button>
+            {% else %}
+            <form action="{% url 'complete_task' task.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary btn-block">
+                ¡Hazlo ya! ⏰
+              </button>
+            </form>
+            {% endif %}
+          </div>
 
-<form method="POST">
-  {% csrf_token %}
-  {{form.as_p}}
-
-  <button>
-    Update
-  </button>
-</form>
-
-<form action="{% url 'complete_task' task.id %}" method="POST">
-  {% csrf_token %}
-  <button>
-    complete
-  </button>
-</form>
-
-<form action="{% url 'delete_task' task.id %}" method="POST">
-  {% csrf_token %}
-  <button>
-    delete
-  </button>
-</form>
+          <form action="{% url 'delete_task' task.id %}" method="POST" class="mt-3">
+            {% csrf_token %}
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-danger btn-block">
+                Eliminar Tarea 🗑️
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
